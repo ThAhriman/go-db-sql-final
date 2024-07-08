@@ -186,6 +186,5 @@ func TestGetByClient(t *testing.T) {
 		if !ok {
 			fmt.Println("в storedParcels нет посылок из parcelMap")
 		}
-
 	}
 }
