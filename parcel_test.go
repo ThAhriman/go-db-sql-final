@@ -35,9 +35,8 @@ func getTestParcel() Parcel {
 func TestAddGetDelete(t *testing.T) {
 	// prepare
 	db, err := sql.Open("sqlite", "tracker.db") // настройте подключение к БД
-	if err != nil {
-		fmt.Println(err)
-	}
+	require.NoError(t, err)
+
 	defer db.Close()
 	store := NewParcelStore(db)
 	parcel := getTestParcel()
@@ -181,6 +180,7 @@ func TestGetByClient(t *testing.T) {
 		// убедитесь, что все посылки из storedParcels есть в parcelMap
 		// убедитесь, что значения полей полученных посылок заполнены верно
 		assert.Exactly(t, parcelMap[parcel.Number], parcel)
-		assert.True(t, true, parcelMap[parcel.Number])
+		_, ok := parcelMap[parcel.Number]
+		assert.True(t, ok, parcelMap[parcel.Number])
 	}
 }
