@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 
-	"fmt"
 	"math/rand"
 	"testing"
 	"time"
@@ -69,9 +68,8 @@ func TestAddGetDelete(t *testing.T) {
 func TestSetAddress(t *testing.T) {
 	// prepare
 	db, err := sql.Open("sqlite", "tracker.db") // настройте подключение к БД
-	if err != nil {
-		fmt.Println(err)
-	}
+	require.NoError(t, err)
+
 	defer db.Close()
 	store := NewParcelStore(db)
 	parcel := getTestParcel()
@@ -101,9 +99,8 @@ func TestSetAddress(t *testing.T) {
 func TestSetStatus(t *testing.T) {
 	// prepare
 	db, err := sql.Open("sqlite", "tracker.db") // настройте подключение к БД
-	if err != nil {
-		fmt.Println(err)
-	}
+	require.NoError(t, err)
+
 	defer db.Close()
 	store := NewParcelStore(db)
 	parcel := getTestParcel()
@@ -132,9 +129,8 @@ func TestSetStatus(t *testing.T) {
 func TestGetByClient(t *testing.T) {
 	// prepare
 	db, err := sql.Open("sqlite", "tracker.db") // настройте подключение к БД
-	if err != nil {
-		fmt.Println(err)
-	}
+	require.NoError(t, err)
+
 	defer db.Close()
 	store := NewParcelStore(db)
 
@@ -181,6 +177,6 @@ func TestGetByClient(t *testing.T) {
 		// убедитесь, что значения полей полученных посылок заполнены верно
 		assert.Exactly(t, parcelMap[parcel.Number], parcel)
 		_, ok := parcelMap[parcel.Number]
-		assert.True(t, ok, parcelMap[parcel.Number])
+		assert.True(t, ok)
 	}
 }
